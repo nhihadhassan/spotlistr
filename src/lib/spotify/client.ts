@@ -156,6 +156,51 @@ export class SpotifyClient {
     return json.tracks.items;
   }
 
+  /**
+   * The user's top tracks or artists. Powers the stats image tool.
+   * Ranges are Spotify's: short ≈ 4 weeks, medium ≈ 6 months, long ≈ 1 year.
+   */
+  async topItems(
+    type: "tracks" | "artists",
+    range: "short_term" | "medium_term" | "long_term",
+    limit: number,
+  ): Promise<
+    Array<{ name: string; subtitle: string; image: string | null; uri: string }>
+  > {
+    const params = new URLSearchParams({
+      time_range: range,
+      limit: String(limit),
+    });
+
+    if (type === "tracks") {
+      const page = await this.request<SpotifyPaged<SpotifyTrack>>(
+        `/me/top/tracks?${params}`,
+      );
+      return page.items.map((track) => ({
+        name: track.name,
+        subtitle: track.artists.map((a) => a.name).join(", "),
+        image: track.album?.images?.[0]?.url ?? null,
+        uri: track.uri,
+      }));
+    }
+
+    const page = await this.request<
+      SpotifyPaged<{
+        name: string;
+        uri: string;
+        genres: string[];
+        images: Array<{ url: string }>;
+      }>
+    >(`/me/top/artists?${params}`);
+
+    return page.items.map((artist) => ({
+      name: artist.name,
+      subtitle: artist.genres?.slice(0, 2).join(", ") ?? "",
+      image: artist.images?.[0]?.url ?? null,
+      uri: artist.uri,
+    }));
+  }
+
   /** All of the user's playlists, following pagination. */
   async myPlaylists(): Promise<SpotifyPlaylist[]> {
     const all: SpotifyPlaylist[] = [];

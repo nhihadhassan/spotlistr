@@ -11,11 +11,11 @@ on every match and a review step before anything is created.
 | Phase | State |
 |---|---|
 | 1 — Foundation (Next.js, Spotify auth + API client) | complete; OAuth round-trip needs your credentials to verify |
-| 2 — Matching engine | complete, 38 tests passing |
-| 3 — The conversion wizard UI | not started |
-| 4 — YouTube + Spotify sources, CSV/text export | not started |
-| 5 — Toolbox image tools | not started |
-| 6 — Stripe / credits | schema only, deliberately inert |
+| 2 — Matching engine | complete, 50 tests passing |
+| 3 — Conversion wizard | complete; needs a live Spotify session to exercise |
+| 4 — YouTube + Spotify sources, CSV/text export | complete |
+| 5 — Toolbox (grid, cover, stats, now playing) | complete |
+| 6 — Stripe / credits | schema only, deliberately deferred |
 
 ## Setup
 
@@ -79,6 +79,11 @@ and destroy auditability.
 **The matcher is pure.** `src/lib/matching/` takes its search function as a
 parameter rather than importing a Spotify client, which is what lets the
 accuracy suite run offline. Keep it that way.
+
+**The image proxy's allowlist is load-bearing.** `/api/image-proxy` exists
+because a canvas tainted by a cross-origin image fails PNG export silently. Its
+host allowlist is what stops it being an open SSRF proxy into the internal
+network. Never widen it to a substring match or a user-supplied host.
 
 **Match accuracy is the health metric.** `npm run test:matching` prints top-1
 accuracy against `src/lib/matching/__tests__/cases.json`. The gate is 95%. If a
