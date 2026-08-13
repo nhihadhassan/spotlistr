@@ -1,0 +1,61 @@
+[
+  { "input": "Radiohead - Idioteque", "expect": "idioteque", "note": "baseline" },
+  { "input": "1. Radiohead - Idioteque", "expect": "idioteque", "note": "numbered list" },
+  { "input": "01 - Radiohead - Idioteque", "expect": "idioteque", "note": "number + dash marker" },
+  { "input": "[3] Radiohead - Idioteque", "expect": "idioteque", "note": "bracketed number" },
+  { "input": "  Radiohead  -  Idioteque  ", "expect": "idioteque", "note": "sloppy whitespace" },
+  { "input": "Radiohead – Idioteque", "expect": "idioteque", "note": "en dash" },
+  { "input": "Radiohead — Idioteque", "expect": "idioteque", "note": "em dash" },
+  { "input": "Radiohead | Idioteque", "expect": "idioteque", "note": "pipe separator" },
+  { "input": "RADIOHEAD - IDIOTEQUE", "expect": "idioteque", "note": "shouting" },
+  { "input": "radiohead - idioteque", "expect": "idioteque", "note": "lowercase" },
+  { "input": "Idioteque - Radiohead", "expect": "idioteque", "note": "reversed order" },
+  { "input": "Radiohead - Idioteque (Official Video)", "expect": "idioteque", "note": "youtube noise" },
+  { "input": "Radiohead - Idioteque [HD]", "expect": "idioteque", "note": "quality tag" },
+  { "input": "Radiohead - Idioteque (Lyrics)", "expect": "idioteque", "note": "lyrics tag" },
+  { "input": "Radiohead - Idioteque (Official Music Video) [4K]", "expect": "idioteque", "note": "stacked noise" },
+
+  { "input": "Radiohead - Karma Police", "expect": "karma-police", "note": "prefers original over remaster" },
+  { "input": "Radiohead - Karma Police - Remastered 2011", "expect": "karma-police", "note": "remaster suffix stripped" },
+  { "input": "Radiohead - Paranoid Android", "expect": "paranoid-android", "note": "same artist, other song" },
+
+  { "input": "Radiohead - Creep", "expect": "creep", "note": "must beat karaoke + cover + live decoys" },
+  { "input": "Creep - Radiohead", "expect": "creep", "note": "reversed, with decoys present" },
+  { "input": "Radiohead - Creep (Live)", "expect": "creep-live", "note": "live explicitly requested" },
+  { "input": "1. Radiohead - Creep (Official Video)", "expect": "creep", "note": "noise + decoys" },
+
+  { "input": "Aphex Twin - Xtal", "expect": "xtal", "note": "short title" },
+  { "input": "Beyonce - Halo", "expect": "halo", "note": "missing diacritic on artist" },
+  { "input": "Beyoncé - Halo", "expect": "halo", "note": "diacritic present" },
+  { "input": "beyonce - halo", "expect": "halo", "note": "must beat karaoke decoy" },
+
+  { "input": "Dua Lipa - One Kiss", "expect": "one-kiss", "note": "secondary credited artist" },
+  { "input": "Calvin Harris - One Kiss", "expect": "one-kiss", "note": "primary credited artist" },
+  { "input": "Calvin Harris, Dua Lipa - One Kiss", "expect": "one-kiss", "note": "both artists listed" },
+
+  { "input": "Post Malone feat. Swae Lee - Sunflower", "expect": "sunflower", "note": "feat. on artist side" },
+  { "input": "Sunflower | Post Malone feat. Swae Lee", "expect": "sunflower", "note": "feat. disambiguates order" },
+  { "input": "Post Malone - Sunflower", "expect": "sunflower", "note": "featured artist omitted" },
+
+  { "input": "Daft Punk - One More Time", "expect": "one-more-time", "note": "must beat remix decoy" },
+  { "input": "Nirvana - Come As You Are", "expect": "come-as-you-are", "note": "must beat live decoy" },
+  { "input": "Nirvana - Come As You Are (Live)", "expect": "come-as-you-are-live", "note": "live requested" },
+  { "input": "Nirvana - Smells Like Teen Spirit", "expect": "smells-like", "note": "long title" },
+
+  { "input": "Queen - Bohemian Rhapsody", "expect": "bohemian-rhapsody", "note": "must beat karaoke decoy" },
+  { "input": "Bohemian Rhapsody", "expect": "bohemian-rhapsody", "note": "title only, no artist" },
+  { "input": "Bohemian Rhapsody by Queen", "expect": "bohemian-rhapsody", "note": "by separator" },
+
+  { "input": "1. 2 Unlimited - No Limit", "expect": "no-limit", "note": "artist name starts with a digit" },
+  { "input": "2 Unlimited - No Limit", "expect": "no-limit", "note": "digit-leading artist, no marker" },
+
+  { "input": "宇多田ヒカル - 光", "expect": "hikari", "note": "non-latin script" },
+
+  { "input": "Dua Lipa - Levitating", "expect": "levitating", "note": "must beat remix decoy" },
+  { "input": "a-ha - Take On Me", "expect": "take-on-me", "note": "hyphen inside the artist name" },
+  { "input": "Journey - Don't Stop Believin'", "expect": "dont-stop", "note": "apostrophes" },
+  { "input": "Journey - Dont Stop Believin", "expect": "dont-stop", "note": "apostrophes omitted" },
+  { "input": "Drake - Hotline Bling", "expect": "hotline-bling", "note": "baseline" },
+  { "input": "New Order - Blue Monday", "expect": "blue-monday", "note": "must beat the '88 reissue" },
+  { "input": "Tyler, The Creator - 911 / Mr. Lonely", "expect": "911", "note": "comma in artist, slash in title" }
+]
