@@ -1,12 +1,9 @@
 import Link from "next/link";
 import { getUser } from "@/lib/auth";
 import { spotifyForCurrentUser } from "@/lib/spotify/client";
+import { SOURCE_DESCRIPTORS } from "@/lib/sources";
+import { Wizard } from "@/components/wizard/wizard";
 
-/**
- * Placeholder for the Phase 3 wizard. For now it doubles as the end-to-end
- * check that the Spotify connection actually works: if your playlists show up
- * here, auth, token storage, refresh, and the API client are all correct.
- */
 export default async function ConvertPage() {
   const user = await getUser();
 
@@ -34,33 +31,27 @@ export default async function ConvertPage() {
     );
   }
 
-  let playlists: Array<{ id: string; name: string; total: number }> = [];
-  let error: string | null = null;
-
+  // Used by the Spotify source picker and the "add to existing" flow. A
+  // failure here shouldn't block the textbox and YouTube sources, which don't
+  // need it — so degrade to an empty list rather than erroring the page.
+  let playlists: Array<{ id: string; name: string; trackCount: number }> = [];
   try {
     const spotify = spotifyForCurrentUser();
-    const raw = await spotify.myPlaylists();
-    playlists = raw.map((p) => ({
+    playlists = (await spotify.myPlaylists()).map((p) => ({
       id: p.id,
       name: p.name,
-      total: p.tracks.total,
+      trackCount: p.tracks.total,
     }));
-  } catch (err) {
-    error = err instanceof Error ? err.message : "Unknown error";
+  } catch {
+    playlists = [];
   }
 
   return (
     <main className="mx-auto min-h-dvh max-w-3xl px-6 py-16">
-      <div className="mb-10 flex items-baseline justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-semibold tracking-tight">
-            Signed in as {user.displayName ?? user.id}
-          </h1>
-          <p className="mt-2 text-muted-foreground">
-            The conversion wizard lands here in Phase 3. Your playlists below
-            confirm the Spotify connection is working.
-          </p>
-        </div>
+      <header className="mb-10 flex items-baseline justify-between gap-4">
+        <h1 className="text-3xl font-semibold tracking-tight">
+          Convert to a playlist
+        </h1>
         <form action="/auth/signout" method="post">
           <button
             type="submit"
@@ -69,35 +60,9 @@ export default async function ConvertPage() {
             Sign out
           </button>
         </form>
-      </div>
+      </header>
 
-      {error ? (
-        <div className="rounded-lg border border-destructive/40 bg-destructive/5 p-4">
-          <p className="font-medium text-destructive">
-            Couldn&apos;t load your playlists
-          </p>
-          <p className="mt-1 text-sm text-muted-foreground">{error}</p>
-        </div>
-      ) : (
-        <ul className="divide-y rounded-lg border">
-          {playlists.map((playlist) => (
-            <li
-              key={playlist.id}
-              className="flex items-center justify-between gap-4 px-4 py-3"
-            >
-              <span className="truncate">{playlist.name}</span>
-              <span className="shrink-0 text-sm text-muted-foreground">
-                {playlist.total} {playlist.total === 1 ? "track" : "tracks"}
-              </span>
-            </li>
-          ))}
-          {playlists.length === 0 && (
-            <li className="px-4 py-3 text-muted-foreground">
-              No playlists on this account yet.
-            </li>
-          )}
-        </ul>
-      )}
+      <Wizard sources={SOURCE_DESCRIPTORS} playlists={playlists} />
     </main>
   );
 }
