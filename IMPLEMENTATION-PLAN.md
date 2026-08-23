@@ -2,7 +2,7 @@
 
 ## Context
 
-`~/dev/spotlistr` is an empty directory. We are building, from
+`~/path/to/spotlistr` was an empty directory. We are building, from
 scratch, a product modeled on https://www.spotlistr.com — a tool that converts tracklists
 from arbitrary sources into Spotify playlists, with a human review step for ambiguous
 matches, surrounded by free image-generator tools that drive acquisition.

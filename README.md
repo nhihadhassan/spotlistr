@@ -1,7 +1,10 @@
-# Playlist Converter
+# Spotlistr
 
-Turn a tracklist from anywhere into a Spotify playlist, with a confidence score
-on every match and a review step before anything is created.
+Turn a tracklist from anywhere — a YouTube video, a text list, a CSV — into a
+Spotify playlist, with a confidence score on every match and a review step
+before anything is created.
+
+**Live:** https://spotlistr.vercel.app
 
 **Docs:** [PRD.md](./PRD.md) · [IMPLEMENTATION-PLAN.md](./IMPLEMENTATION-PLAN.md) ·
 [SPOTLISTR-CLONE-SPEC.md](./SPOTLISTR-CLONE-SPEC.md) (research on the reference product)
@@ -93,3 +96,7 @@ Note that the current corpus runs against a small offline catalog, so it tests
 parsing, query construction, ranking, and decoy rejection — not real-world
 search recall. Building a live corpus of ~200 real inputs with verified Spotify
 URIs is the outstanding task that makes this number meaningful.
+
+## Licence
+
+Released under the [MIT License](LICENSE).
