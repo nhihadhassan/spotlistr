@@ -9,6 +9,15 @@ before anything is created.
 **Docs:** [PRD.md](./PRD.md) · [IMPLEMENTATION-PLAN.md](./IMPLEMENTATION-PLAN.md) ·
 [SPOTLISTR-CLONE-SPEC.md](./SPOTLISTR-CLONE-SPEC.md) (research on the reference product)
 
+## Stack
+
+| Concern | Choice |
+| --- | --- |
+| Framework | Next.js (App Router), React, TypeScript |
+| Auth | Spotify OAuth (PKCE) on a signed httpOnly session cookie |
+| Matching | Custom scoring engine with per-track confidence, covered by 50 tests |
+| Sources | YouTube, pasted text, and CSV tracklists |
+
 ## Status
 
 | Phase | State |
